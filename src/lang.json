@@ -1,0 +1,18 @@
+{
+  "en": {
+    "title": "Welcome to GameBoard!",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id facilisis sem. Nam viverra faucibus ligula, maximus vehicula lectus. Duis eros neque, bibendum a libero eget, ultrices blandit enim. In felis ante, molestie nec interdum maximus, iaculis vel nibh. Aliquam erat volutpat.",
+    "homePage": "Home Page",
+    "ticTacToe": "Tic Tac Toe",
+    "paddleGame": "Paddle Game",
+    "settings": "Settings"
+  },
+  "pl": {
+    "title": "Witam na PlatformieGier!",
+    "desc": "Nie ma nikogo, kto lubiłby ból dla samego bólu, szukał go tylko po to, by go poczuć, po prostu dlatego, że to ból...",
+    "homePage": "Strona główna",
+    "ticTacToe": "Kółko Krzyżyk",
+    "paddleGame": "Odbijanie piłki",
+    "settings": "Ustawienia"
+  }
+}
