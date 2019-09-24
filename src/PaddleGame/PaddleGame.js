@@ -1,16 +1,17 @@
 import React from 'react';
 import './PaddleGame.css';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 
 class PaddleGame extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.game = {
-      gameSpeed: 1000,
+      gameSpeed: 700,
       gameBoard: null,
       context: null,
-      ballX: 100,
-      ballY: 100,
+      ballX: 0,
+      ballY: 0,
       ballSpeedX: 5,
       ballSpeedY: 7,
       paddleWidth: 100,
@@ -26,14 +27,6 @@ class PaddleGame extends React.Component {
       isFullScreen: false,
     }
 
-    if (localStorage.getItem('highScore') > 10 && localStorage.getItem('highScore') < 20) {
-      this.game.gameSpeed = 500
-    }
-
-    if (localStorage.getItem('highScore') > 20) {
-      this.game.gameSpeed = 250
-    }
-
     this.updateAll = this.updateAll.bind(this);
     this.updateMousePosition = this.updateMousePosition.bind(this);
   }
@@ -43,6 +36,7 @@ class PaddleGame extends React.Component {
     this.game.context = this.refs.canvas.getContext('2d');
     this.printElements();
     this.refs.canvas.addEventListener('mousemove', this.updateMousePosition)
+    localStorage.setItem('score', '0');
   }
 
   componentWillUnmount() {
@@ -64,7 +58,6 @@ class PaddleGame extends React.Component {
     }
     if(this.game.ballY > this.game.gameBoard.height) {
       this.resetBall();
-      this.setState({bounces: 0})
     }
   
     let paddleTopEdgeY = this.game.gameBoard.height - this.game.paddleDistFromEdge;
@@ -77,9 +70,48 @@ class PaddleGame extends React.Component {
         this.game.ballX > paddleLeftEdgeX &&
         this.game.ballX < paddleRightEdgeX) {
           this.game.ballSpeedY *= -1;
-          this.setState({bounces: this.state.bounces + 1})
+          this.setState({bounces: this.state.bounces+1})
+          console.log(this.state.bounces);
           this.setHighScore();
+          this.setScore();
+          this.updateSpeedGame();
         }
+  }
+
+  updateSpeedGame() {
+    if (localStorage.getItem('score') > 2 && localStorage.getItem('score') < 4) {
+      this.game.gameSpeed = 400;
+      this.game.ballSpeedX *= -2;
+      // this.game.ballSpeedY = 9;
+      console.log(this.game.gameSpeed);
+    }
+
+    if (localStorage.getItem('score') > 4 && localStorage.getItem('score') < 6) {
+      this.game.gameSpeed = 250;
+      this.game.ballSpeedX *= -2;
+      console.log(this.game.gameSpeed);
+    }
+
+    if (localStorage.getItem('score') > 6 && localStorage.getItem('score') < 8) {
+      this.game.gameSpeed = 50;
+      this.game.ballSpeedX *= -2;
+      console.log(this.game.gameSpeed);
+    }
+
+    if (localStorage.getItem('score') > 8 && localStorage.getItem('score') < 10) {
+      this.game.gameSpeed = -250;
+      this.game.ballSpeedX *= -2;
+      console.log(this.game.gameSpeed);
+    }
+  }
+
+  setScore() {
+    let currentScore = localStorage.getItem("score");
+
+    if (currentScore < this.state.bounces) {
+      localStorage.setItem("score", this.state.bounces);
+      this.setState({currentScore})
+    }
   }
 
   setHighScore() {
@@ -105,7 +137,7 @@ class PaddleGame extends React.Component {
   }
   
   updateAll() {
-    this.game.gameSpeed = this.game.gameSpeed - 1;
+    this.game.gameSpeed = this.game.gameSpeed;
     this.printElements();
     this.updateDirection();
   }
@@ -117,8 +149,13 @@ class PaddleGame extends React.Component {
   }
   
   resetBall() {
-    this.game.ballX = this.game.gameBoard.width / 2;
-    this.game.ballY = this.game.gameBoard.height / 4;
+    this.game.ballX = 0;
+    this.game.ballY = 0;
+    localStorage.setItem('score', '0');
+    this.startStopGame();
+    this.game.gameSpeed = 700;
+    this.game.ballSpeedX = 5;
+    this.game.ballSpeedY = 7;
   }
 
   toggleFullScreen() {
@@ -126,13 +163,18 @@ class PaddleGame extends React.Component {
   }
 
   startStopGame() {
+    console.log(this.state.gameRefreshInterval)
+    console.log(this.game.gameSpeed)
     if (!this.state.gameRefreshInterval) {
       this.setState({gameRefreshInterval: setInterval(this.updateAll, this.game.gameSpeed/30)});
     } else {
       clearInterval(this.state.gameRefreshInterval);
       this.setState({gameRefreshInterval: null})
     }
+    
   }
+
+
 
   resetScore() {
     localStorage.setItem('highScore', '0');
@@ -150,11 +192,14 @@ class PaddleGame extends React.Component {
 
     return (
       <div>
-        <h1>Current bounces: {this.state.bounces}</h1>
+
+        <h1>Current bounces: {localStorage.getItem("score")}</h1>
         <h2>High Score: {localStorage.getItem("highScore")}</h2>
-
+        
+      
         <button className="btn btn-success" onClick={this.toggleFullScreen.bind(this)}>FULL SCREEN</button>
-
+        
+        
         {startStopGameBtn}
         
         <button className="btn btn-primary" onClick={this.resetScore.bind(this)}>RESET SCORE</button>
