@@ -2,29 +2,20 @@ import React from 'react';
 import axios from 'axios';
 import lang from '../lang.json';
 import './HomePage.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import TicTacToe from '../TicTacToe/TicTacToe';
+import PaddleGame from '../PaddleGame/PaddleGame';
+import TicTacToeScreenShot from './TicTacToe.jpg';
+import PaddleGameScreenShot from './paddleGame.jpg';
 
 class HomePage extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      intervalId: null,
-      count: 0
+      TicTacToeScreen: <img src={TicTacToeScreenShot} alt='TicTacToeScreen'/>,
+      PaddleGameScreen: <img src={PaddleGameScreenShot} alt='PaddleGameScreen'/>
     }
-  }
-
-  updateTimer = () => {
-    this.setState({
-      count: this.state.count + 1
-    })
-  }
-
-  componentDidMount() {
-    this.setState({intervalId: setInterval(this.updateTimer, 1000)});
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId)
   }
 
   setLang(lang) {
@@ -43,11 +34,32 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{lang[localStorage.getItem('lang')].title}</h1>
-        <h3>{lang[localStorage.getItem('lang')].desc}</h3>
-        <button className="btn-primary" onClick={this.getLocation.bind(this)}>Moja lokalizacja</button>
-      </div>
+      <>
+        <div className="home-container">
+          <h1>{lang[localStorage.getItem('lang')].title}</h1>
+
+            <div className="home-box-container">
+              <div className="home-hover-single-box">
+                <div className="home-single-box">
+                  <Link className="nav-link" to="/tictactoe">{this.state.TicTacToeScreen}</Link>
+                </div>
+              </div>
+              <div className="home-hover-single-box">
+                <div className="home-single-box">
+                  <Link className="nav-link" to="/paddle">{this.state.PaddleGameScreen}</Link>
+                </div>
+              </div>
+            </div>
+
+          <h3>{lang[localStorage.getItem('lang')].desc}</h3>
+          <button className="btn-primary" onClick={this.getLocation.bind(this)}>{lang[localStorage.getItem('lang')].localization}</button>
+          
+        </div>
+        <Router>
+          <Route path="/tictactoe" component={TicTacToe}/>
+          <Route path="/paddle" component={PaddleGame}/>
+        </Router>
+      </>
     );
   } 
 }

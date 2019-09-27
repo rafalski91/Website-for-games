@@ -48,9 +48,7 @@ class App extends React.Component {
               <Link className="nav-link" to="/settings">{lang[localStorage.getItem('lang')].settings}</Link>
             </Nav.Item>
           </Nav>
-        </div>
-
-        <div className="container">
+          
           <Route exact path="/" component={HomePage}/>
           <Route path="/tictactoe" component={TicTacToe}/>
           <Route path="/paddle" component={PaddleGame}/>

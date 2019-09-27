@@ -1,4 +1,35 @@
+.game-board-paddle-game {
+  position: relative;
+  box-sizing: border-box;
+  width: 90%;
+  height: 90%;
+  padding: 2%;
+  margin: 0 auto;
+  background-color: #494545;
+  text-align: center;
+}
+
+.score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 60%;
+}
+
+.options-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
 .game-board {
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: auto;
   cursor: none;
 }
 

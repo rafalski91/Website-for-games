@@ -1,6 +1,6 @@
 import React from 'react';
 import './PaddleGame.css';
-import KeyboardEventHandler from 'react-keyboard-event-handler';
+import lang from '../lang';
 
 class PaddleGame extends React.Component {
   constructor(props) {
@@ -71,7 +71,6 @@ class PaddleGame extends React.Component {
         this.game.ballX < paddleRightEdgeX) {
           this.game.ballSpeedY *= -1;
           this.setState({bounces: this.state.bounces+1})
-          console.log(this.state.bounces);
           this.setHighScore();
           this.setScore();
           this.updateSpeedGame();
@@ -81,27 +80,25 @@ class PaddleGame extends React.Component {
   updateSpeedGame() {
     if (localStorage.getItem('score') > 2 && localStorage.getItem('score') < 4) {
       this.game.gameSpeed = 400;
-      this.game.ballSpeedX *= -2;
-      // this.game.ballSpeedY = 9;
-      console.log(this.game.gameSpeed);
+      this.game.ballSpeedX *= 1;
+      this.game.ballSpeedY *= 2;
     }
 
     if (localStorage.getItem('score') > 4 && localStorage.getItem('score') < 6) {
       this.game.gameSpeed = 250;
-      this.game.ballSpeedX *= -2;
-      console.log(this.game.gameSpeed);
+      this.game.ballSpeedX *= 2;
+      this.game.ballSpeedY *= 1;
     }
 
     if (localStorage.getItem('score') > 6 && localStorage.getItem('score') < 8) {
-      this.game.gameSpeed = 50;
-      this.game.ballSpeedX *= -2;
-      console.log(this.game.gameSpeed);
+      this.game.gameSpeed = 150;
+      this.game.ballSpeedX *= 1;
+      this.game.ballSpeedY *= 1.5;
     }
 
     if (localStorage.getItem('score') > 8 && localStorage.getItem('score') < 10) {
-      this.game.gameSpeed = -250;
-      this.game.ballSpeedX *= -2;
-      console.log(this.game.gameSpeed);
+      this.game.ballSpeedX *= 1;
+      this.game.ballSpeedY *= 1.5;
     }
   }
 
@@ -149,13 +146,14 @@ class PaddleGame extends React.Component {
   }
   
   resetBall() {
+    this.setState({bounces: 0})
     this.game.ballX = 0;
     this.game.ballY = 0;
     localStorage.setItem('score', '0');
-    this.startStopGame();
     this.game.gameSpeed = 700;
     this.game.ballSpeedX = 5;
     this.game.ballSpeedY = 7;
+    this.startStopGame();
   }
 
   toggleFullScreen() {
@@ -163,21 +161,17 @@ class PaddleGame extends React.Component {
   }
 
   startStopGame() {
-    console.log(this.state.gameRefreshInterval)
-    console.log(this.game.gameSpeed)
     if (!this.state.gameRefreshInterval) {
       this.setState({gameRefreshInterval: setInterval(this.updateAll, this.game.gameSpeed/30)});
     } else {
       clearInterval(this.state.gameRefreshInterval);
       this.setState({gameRefreshInterval: null})
     }
-    
   }
-
-
 
   resetScore() {
     localStorage.setItem('highScore', '0');
+    localStorage.setItem('score', '0');
     this.setState({bounces: 0})
   }
 
@@ -185,26 +179,23 @@ class PaddleGame extends React.Component {
     let startStopGameBtn;
 
     if (!this.state.gameRefreshInterval) {
-      startStopGameBtn = <button className="btn btn-primary" onClick={this.startStopGame.bind(this)}>START GAME</button>
+      startStopGameBtn = <button className="btn btn-success" onClick={this.startStopGame.bind(this)}>{lang[localStorage.getItem('lang')].buttonStart}</button>
     } else {
-      startStopGameBtn = <button className="btn btn-danger" onClick={this.startStopGame.bind(this)}>STOP GAME</button>
+      startStopGameBtn = <button className="btn btn-danger" onClick={this.startStopGame.bind(this)}>{lang[localStorage.getItem('lang')].buttonStop}</button>
     }
 
     return (
-      <div>
-
-        <h1>Current bounces: {localStorage.getItem("score")}</h1>
-        <h2>High Score: {localStorage.getItem("highScore")}</h2>
-        
-      
-        <button className="btn btn-success" onClick={this.toggleFullScreen.bind(this)}>FULL SCREEN</button>
-        
-        
-        {startStopGameBtn}
-        
-        <button className="btn btn-primary" onClick={this.resetScore.bind(this)}>RESET SCORE</button>
-
-        <canvas onDoubleClick={this.toggleFullScreen.bind(this)}
+      <div className="game-board-container-paddle-game">
+        <div className="score-container">
+          <h3>{lang[localStorage.getItem('lang')].currentScore} {localStorage.getItem("score")}</h3>
+          <h3>{lang[localStorage.getItem('lang')].highScore} {localStorage.getItem("highScore")}</h3>
+        </div>
+        <div className="options-container">
+          <button className="btn btn-secondary" onClick={this.toggleFullScreen.bind(this)}>{lang[localStorage.getItem('lang')].buttonFullScreen}</button>
+          {startStopGameBtn}
+          <button className="btn btn-warning" onClick={this.resetScore.bind(this)}>{lang[localStorage.getItem('lang')].buttonResetScore}</button>
+        </div>
+        <canvas onDoubleClick={this.toggleFullScreen.bind(this)} onClick={this.startStopGame.bind(this)}
         className={this.state.isFullScreen ? 'game-board game-board--full-screen' : 'game-board'} 
         ref="canvas" 
         width="800" 

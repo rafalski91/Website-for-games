@@ -1,26 +1,41 @@
-.game-board {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.game-board-tictactoe {
+  box-sizing: border-box;
+  width: 50%;
+  height: 80%;
+  padding: 5%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-column-gap: 3%;
+  grid-row-gap: 2%;
+  background-color: #494545;
+  text-align: center;
 }
 
 .game-board--field {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32%;
-  margin-bottom: 2%;
-  background: gray;
+  background: white;
   cursor: pointer;
 }
 
 .game-board--field:hover {
-  background: darkgray;
+  background: #007bff;
 }
 
-.game-board--field:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
+.btn {
+  width: 100%;
+  height: 10%;
+}
+
+.game-board--field-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }

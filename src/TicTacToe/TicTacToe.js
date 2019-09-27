@@ -1,20 +1,23 @@
 import React from 'react';
 import './TicTacToe.css';
+import lang from '../lang';
+import Tic from './transparentO.png';
+import Tac from './transparentX.png';
 
 class TicTacToe extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      player1: 'O',
-      player2: 'X',
+      cirlce: <img src={Tic} alt='o'/>,
+      sharp: <img src={Tac} alt='x'/>,
       turn: 0,
       board: [
         '', '', '',
         '', '', '',
         '', '', '',
       ],
-      gameEnabled: true,
+      gameEnabled: true
     }
 
     this.computerTurn = this.computerTurn.bind(this);
@@ -89,7 +92,7 @@ class TicTacToe extends React.Component {
     let computerFieldSelected = _getRandomInt();
 
     if (board[computerFieldSelected] === '') {
-      board[computerFieldSelected] = 'o'
+      board[computerFieldSelected] = this.state.cirlce
     } else if (this.state.gameEnabled && this.state.board.indexOf('') >= 0) {
       this.computerTurn();
       return;
@@ -108,7 +111,7 @@ class TicTacToe extends React.Component {
     if (this.state.board[index] !== '') { alert('To miejsce jest już zajęte!'); return };
 
     let board = this.state.board;
-    board[index] = 'x';
+    board[index] = this.state.sharp;
 
     this.setState({
       turn: this.state.turn + 1,
@@ -146,7 +149,7 @@ class TicTacToe extends React.Component {
   render() {
     return (
       <>
-        <div className="game-board">
+        <div className="game-board-tictactoe">
           { this.state.board.map((field, key) => {
             return (
               <div className="game-board--field" key={key} onClick={this.onFieldClick.bind(this, key)}>
@@ -155,7 +158,7 @@ class TicTacToe extends React.Component {
             )
           }) }
         </div>
-        <button onClick={this.resetGameBoard.bind(this)} className="btn btn-danger">RESET GAME</button>
+        <button onClick={this.resetGameBoard.bind(this)} className="btn btn-danger">{lang[localStorage.getItem('lang')].buttonReset}</button>
       </>
     );
   } 

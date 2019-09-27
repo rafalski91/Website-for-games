@@ -1,18 +1,34 @@
 {
   "en": {
-    "title": "Welcome to GameBoard!",
+    "title": "Welcome to Old School Game Board!",
     "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id facilisis sem. Nam viverra faucibus ligula, maximus vehicula lectus. Duis eros neque, bibendum a libero eget, ultrices blandit enim. In felis ante, molestie nec interdum maximus, iaculis vel nibh. Aliquam erat volutpat.",
     "homePage": "Home Page",
     "ticTacToe": "Tic Tac Toe",
     "paddleGame": "Paddle Game",
-    "settings": "Settings"
+    "settings": "Settings",
+    "localization": "Check your localization!",
+    "buttonReset": "RESET GAME",
+    "buttonStart": "START GAME",
+    "buttonStop": "STOP GAME",
+    "buttonFullScreen": "FULL SCREEN",
+    "buttonResetScore": "RESET SCORE",
+    "currentScore": "COURRENT BOUNCES: ",
+    "highScore": "HIGH SCORE: "
   },
   "pl": {
-    "title": "Witam na PlatformieGier!",
+    "title": "Witam na Platformie Gier Klasyków!",
     "desc": "Nie ma nikogo, kto lubiłby ból dla samego bólu, szukał go tylko po to, by go poczuć, po prostu dlatego, że to ból...",
     "homePage": "Strona główna",
     "ticTacToe": "Kółko Krzyżyk",
     "paddleGame": "Odbijanie piłki",
-    "settings": "Ustawienia"
+    "settings": "Ustawienia",
+    "localization": "Sprawdź swoją lokalizację!",
+    "buttonReset": "ZRESTARTUJ GRĘ",
+    "buttonStart": "START",
+    "buttonStop": "STOP",
+    "buttonFullScreen": "PEŁNY EKRAN",
+    "buttonResetScore": "RESET PUNKTÓW",
+    "currentScore": "WYNIK: ",
+    "highScore": "NAJLEPSZY WYNIK: "
   }
 }
